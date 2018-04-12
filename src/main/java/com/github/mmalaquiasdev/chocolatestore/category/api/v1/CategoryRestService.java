@@ -30,7 +30,7 @@ class CategoryRestService {
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public Category findByName(@PathVariable Integer id){
-        return service.findById(id).orElse(new Category());
+        return service.findById(id).orElse(Category.builder().build());
     }
 
     @PostMapping

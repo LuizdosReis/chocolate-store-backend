@@ -1,21 +1,18 @@
 package com.github.mmalaquiasdev.chocolatestore.category;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.github.mmalaquiasdev.chocolatestore.product.Product;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 public class Category implements Serializable {
 
@@ -24,4 +21,12 @@ public class Category implements Serializable {
     @NotBlank
     @Column(unique = true)
     private String name;
+    @ManyToMany(mappedBy = "categories")
+    private List<Product> products;
+
+    public List<Product> addProduct(Product product) {
+        if(products == null) products = new ArrayList<>();
+        products.add(product);
+        return products;
+    }
 }
